@@ -33,7 +33,7 @@ public class ArticleRepository {
     public ArticleRepository(Application application){
         ArticleDatabase db = ArticleDatabase.getDatabase(application);
         mArticleDAO = db.articleDAO();
-        mAllArticles = mArticleDAO.getAllArticles();
+//        mAllArticles = mArticleDAO.getAllArticles();
 
         mResponseModelLiveData = new MutableLiveData<>();
 

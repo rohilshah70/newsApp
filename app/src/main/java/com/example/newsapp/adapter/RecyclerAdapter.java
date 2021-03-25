@@ -1,12 +1,15 @@
 package com.example.newsapp.adapter;
 
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
@@ -19,10 +22,6 @@ import java.util.List;
 public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ArticleViewHolder> {
 
     private List<Article> mArticleList = new ArrayList<>();
-
-//    public RecyclerAdapter(List<Article> articleList){
-//        this.mArticleList = articleList;
-//    }
 
     @NonNull
     @Override
@@ -38,11 +37,20 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.Articl
     @Override
     public void onBindViewHolder(@NonNull ArticleViewHolder holder, int position) {
 
-        Article article = mArticleList.get(position);
+        final Article article = mArticleList.get(position);
         holder.authorText.setText(article.getAuthor());
         holder.title.setText(article.getTitle());
         holder.description.setText(article.getDescription());
         Glide.with(holder.itemView).load(article.getUrlToImage()).into(holder.newsImage);
+        holder.detailButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("article", article);
+                Navigation.findNavController(view).navigate(R.id.action_articleListFragment_to_articleDetailFragment, bundle);
+
+            }
+        });
     }
 
     @Override
@@ -62,7 +70,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.Articl
         private TextView title;
         private TextView description;
         private ImageView newsImage;
-
+        private Button detailButton;
 
         public ArticleViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -70,21 +78,8 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.Articl
             title = itemView.findViewById(R.id.title_text);
             description = itemView.findViewById(R.id.description_text);
             newsImage = itemView.findViewById(R.id.imageViewPhoto);
+            detailButton = itemView.findViewById(R.id.detail_button);
 
         }
     }
-
-//    static class ArticleDiff extends DiffUtil.ItemCallback<Article> {
-//
-//        @Override
-//        public boolean areItemsTheSame(@NonNull Article oldItem, @NonNull Article newItem) {
-//            return oldItem.getUrl() == newItem.getUrl();
-//        }
-//
-//        @SuppressLint("DiffUtilEquals")
-//        @Override
-//        public boolean areContentsTheSame(@NonNull Article oldItem, @NonNull Article newItem) {
-//            return oldItem == newItem;
-//        }
-//    }
 }

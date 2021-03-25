@@ -1,6 +1,9 @@
 package com.example.newsapp.viewModel;
 
 import android.app.Application;
+import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
@@ -14,16 +17,22 @@ import java.util.List;
 
 public class NewsViewModel extends AndroidViewModel {
 
+    private Application mApplication;
     private ArticleRepository mArticleRepo;
-    private final LiveData<ResponseModel> mAllArticles;
+    private final LiveData<List<Article>> mAllArticles;
 
     public NewsViewModel(@NonNull Application application) {
         super(application);
-        mArticleRepo = new ArticleRepository(application);
+        mApplication = application;
+        mArticleRepo = new ArticleRepository(application, hasInternetConnection());
         mAllArticles = mArticleRepo.getAllArticles();
     }
 
-    public LiveData<ResponseModel> getAllArticles() { return mAllArticles; }
+    public LiveData<List<Article>> getAllArticles() { return mAllArticles; }
 
-    public void insert(Article article) { mArticleRepo.insert(article); }
+    private boolean hasInternetConnection(){
+        ConnectivityManager connectivityManager = (ConnectivityManager) mApplication.getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+        return activeNetworkInfo != null;
+    }
 }

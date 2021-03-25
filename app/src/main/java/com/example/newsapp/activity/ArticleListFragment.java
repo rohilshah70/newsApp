@@ -10,15 +10,15 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.navigation.NavController;
-import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.newsapp.R;
 import com.example.newsapp.adapter.RecyclerAdapter;
-import com.example.newsapp.model.ResponseModel;
+import com.example.newsapp.model.Article;
 import com.example.newsapp.viewModel.NewsViewModel;
+
+import java.util.List;
 
 public class ArticleListFragment extends Fragment {
 
@@ -36,11 +36,11 @@ public class ArticleListFragment extends Fragment {
         recyclerView.setAdapter(recyclerAdapter);
 
         mNewsViewModel = new ViewModelProvider(this).get(NewsViewModel.class);
-        mNewsViewModel.getAllArticles().observe(getViewLifecycleOwner(), new Observer<ResponseModel>() {
+        mNewsViewModel.getAllArticles().observe(getViewLifecycleOwner(), new Observer<List<Article>>() {
             @Override
-            public void onChanged(ResponseModel articleList) {
+            public void onChanged(List<Article> articleList) {
                 //update recycler view
-                recyclerAdapter.setArticleFromActivity(articleList.getArticles());
+                recyclerAdapter.setArticleFromActivity(articleList);
             }
         });
         return rootView;

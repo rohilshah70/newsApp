@@ -1,3 +1,4 @@
 <resources>
-    <string name="app_name">NewsApp</string>
+    <string name="app_name">WHAT\'S THE BUZZ</string>
+    <string name="full_news_button">See Full News</string>
 </resources>

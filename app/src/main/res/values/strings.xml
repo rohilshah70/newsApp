@@ -1,6 +1,7 @@
 <resources>
-    <string name="app_name">WHAT\'S THE BUZZ</string>
+    <string name="app_name">NEWS APP</string>
     <string name="full_news_button">See Full News</string>
     <string name="open_news_fragment">Tap to move to view News List</string>
+    <string name="header">WHAT\'S \n THE BUZZ?</string>
 
 </resources>

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto" android:id="@+id/news_nav_graph"
-    app:startDestination="@id/articleListFragment">
+    app:startDestination="@id/motionFragment">
 
     <fragment
         android:id="@+id/articleListFragment"
@@ -24,4 +24,8 @@
             android:name="article"
             app:argType="com.example.newsapp.model.Article" />
     </fragment>
+    <fragment
+        android:id="@+id/motionFragment"
+        android:name="com.example.newsapp.activity.MotionFragment"
+        android:label="MotionFragment" />
 </navigation>

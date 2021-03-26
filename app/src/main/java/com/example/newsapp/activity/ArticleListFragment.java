@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -39,10 +40,22 @@ public class ArticleListFragment extends Fragment {
         mNewsViewModel.getAllArticles().observe(getViewLifecycleOwner(), new Observer<List<Article>>() {
             @Override
             public void onChanged(List<Article> articleList) {
-                //update recycler view
-                recyclerAdapter.setArticleFromActivity(articleList);
+                if(!articleList.isEmpty())
+                    //update recycler view
+                    recyclerAdapter.setArticleFromActivity(articleList);
+                else {
+                    makeToast("No internet connection or no cached data");
+                }
             }
         });
         return rootView;
+    }
+
+    private void makeToast(String msg) {
+        Toast toast = Toast.makeText(getActivity().getApplicationContext(),
+                msg,
+                Toast.LENGTH_LONG);
+
+        toast.show();
     }
 }

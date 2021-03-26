@@ -27,5 +27,9 @@
     <fragment
         android:id="@+id/motionFragment"
         android:name="com.example.newsapp.activity.MotionFragment"
-        android:label="MotionFragment" />
+        android:label="MotionFragment" >
+        <action
+            android:id="@+id/action_motionFragment_to_articleListFragment"
+            app:destination="@id/articleListFragment" />
+    </fragment>
 </navigation>

@@ -1,12 +1,8 @@
 package com.example.newsapp.model;
 
-import android.widget.ImageView;
-
-import androidx.databinding.BindingAdapter;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
-import com.bumptech.glide.Glide;
 import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
@@ -74,10 +70,5 @@ public class Article implements Serializable {
     }
     public void setPublishedAt(String publishedAt) {
         this.publishedAt = publishedAt;
-    }
-
-    @BindingAdapter({"newsImage"})
-    public static void loadImageToUrl(ImageView view, String urlImage){
-        Glide.with(view.getContext()).load(urlImage).into(view);
     }
 }

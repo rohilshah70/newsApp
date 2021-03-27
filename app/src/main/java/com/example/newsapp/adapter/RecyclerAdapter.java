@@ -5,13 +5,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.newsapp.R;
-import com.example.newsapp.databinding.MainCardViewBinding;
 import com.example.newsapp.model.Article;
 
 import java.util.ArrayList;
@@ -20,16 +22,16 @@ import java.util.List;
 public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ArticleViewHolder> {
 
     private List<Article> mArticleList = new ArrayList<>();
-    private MainCardViewBinding mBinding;
 
     @NonNull
     @Override
     public ArticleViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         //Inflate card view
-        mBinding = MainCardViewBinding.inflate(
-                LayoutInflater.from(parent.getContext()), parent, false);
-
-        View view = mBinding.getRoot();
+        View view = LayoutInflater.from(parent.getContext()).inflate(
+                R.layout.main_card_view,
+                parent,
+                false
+        );
         return new ArticleViewHolder(view);
     }
 
@@ -37,8 +39,10 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.Articl
     public void onBindViewHolder(@NonNull ArticleViewHolder holder, int position) {
 
         final Article article = mArticleList.get(position);
-        mBinding.setRecyclerCard(article);
-
+        holder.authorText.setText(article.getAuthor());
+        holder.title.setText(article.getTitle());
+        holder.description.setText(article.getDescription());
+        Glide.with(holder.itemView).load(article.getUrlToImage()).into(holder.newsImage);
         //Use navigation to open full article in new fragment. Pass Article object between fragments
         holder.detailButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -63,11 +67,18 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.Articl
     }
 
     class ArticleViewHolder extends RecyclerView.ViewHolder{
+        private TextView authorText;
+        private TextView title;
+        private TextView description;
+        private ImageView newsImage;
         private Button detailButton;
 
         public ArticleViewHolder(@NonNull View itemView) {
             super(itemView);
-
+            authorText = itemView.findViewById(R.id.author_text);
+            title = itemView.findViewById(R.id.title_text);
+            description = itemView.findViewById(R.id.description_text);
+            newsImage = itemView.findViewById(R.id.imageViewPhoto);
             detailButton = itemView.findViewById(R.id.detail_button);
 
         }

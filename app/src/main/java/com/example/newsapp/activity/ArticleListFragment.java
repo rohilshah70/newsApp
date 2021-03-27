@@ -1,6 +1,7 @@
 package com.example.newsapp.activity;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,6 +19,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.newsapp.R;
 import com.example.newsapp.adapter.RecyclerAdapter;
+import com.example.newsapp.databinding.MainCardViewBinding;
 import com.example.newsapp.model.Article;
 import com.example.newsapp.viewModel.NewsViewModel;
 
@@ -46,13 +48,17 @@ public class ArticleListFragment extends Fragment {
         mNewsViewModel.getAllArticles().observe(getViewLifecycleOwner(), new Observer<List<Article>>() {
             @Override
             public void onChanged(List<Article> articleList) {
-                if(!articleList.isEmpty())
+                if(!articleList.isEmpty()) {
                     //update recycler view
                     recyclerAdapter.setArticleFromActivity(articleList);
+                    Log.d("ArticleListFragment", "in onChanged with full list");
+                }
                 else {
                     //the list is empty if newtork connection is not there the first time app is launched
                     //In that case, since no data is fetched, no data is cached
                     makeToast("No internet connection or no cached data");
+                    Log.d("ArticleListFragment", "in onChanged with empty");
+
                 }
             }
         });

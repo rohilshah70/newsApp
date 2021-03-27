@@ -16,6 +16,7 @@ import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
 import com.example.newsapp.R;
+import com.example.newsapp.databinding.ArticleFragmentBinding;
 import com.example.newsapp.model.Article;
 
 public class ArticleDetailFragment extends Fragment {
@@ -27,8 +28,9 @@ public class ArticleDetailFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
-        View rootView = inflater.inflate(R.layout.article_fragment, container, false);
-        mHeaderText = rootView.findViewById(R.id.headerText1);
+        ArticleFragmentBinding binding = ArticleFragmentBinding.inflate(inflater, container, false);
+        View rootView = binding.getRoot();
+//        mHeaderText = rootView.findViewById(R.id.headerText1);
         mCrossImage = rootView.findViewById(R.id.crossImage1);
         WebView myWebView = rootView.findViewById(R.id.webview);
         WebSettings webSettings = myWebView.getSettings();
@@ -45,8 +47,9 @@ public class ArticleDetailFragment extends Fragment {
 
         //Get argument passed from ArticleListFragment
         mArticle = (Article) getArguments().getSerializable("article");
+        binding.setHeader(mArticle);
         //Get article title to set header in fragment
-        mHeaderText.setText(mArticle.getTitle());
+//        mHeaderText.setText(mArticle.getTitle());
         //Load webview using URL from Article object
         myWebView.loadUrl(mArticle.getUrl());
 

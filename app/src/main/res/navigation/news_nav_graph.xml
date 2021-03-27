@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto" android:id="@+id/news_nav_graph"
-    app:startDestination="@id/articleListFragment">
+    app:startDestination="@id/motionFragment">
 
     <fragment
         android:id="@+id/articleListFragment"
@@ -10,10 +10,20 @@
         <action
             android:id="@+id/action_articleListFragment_to_articleDetailFragment"
             app:destination="@id/articleDetailFragment"
+            app:popUpTo="@id/articleDetailFragment"
             app:enterAnim="@anim/slide_in_right"
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_left"
             app:popExitAnim="@anim/slide_out_right"/>
+        <action
+            android:id="@+id/action_articleListFragment_to_motionFragment"
+            app:destination="@id/motionFragment"
+            app:popUpToInclusive="true"
+            app:popUpTo="@id/motionFragment"
+            app:enterAnim="@anim/slide_in_left"
+            app:exitAnim="@anim/slide_out_right"
+            app:popEnterAnim="@anim/slide_in_right"
+            app:popExitAnim="@anim/slide_out_left"/>
     </fragment>
 
     <fragment
@@ -23,5 +33,27 @@
         <argument
             android:name="article"
             app:argType="com.example.newsapp.model.Article" />
+        <action
+            android:id="@+id/action_articleDetailFragment_to_articleListFragment"
+            app:destination="@id/articleListFragment"
+            app:popUpToInclusive="true"
+            app:popUpTo="@id/articleListFragment"
+            app:enterAnim="@anim/slide_in_left"
+            app:exitAnim="@anim/slide_out_right"
+            app:popEnterAnim="@anim/slide_in_right"
+            app:popExitAnim="@anim/slide_out_left" />
+    </fragment>
+    <fragment
+        android:id="@+id/motionFragment"
+        android:name="com.example.newsapp.activity.MotionFragment"
+        android:label="MotionFragment" >
+        <action
+            android:id="@+id/action_motionFragment_to_articleListFragment"
+            app:destination="@id/articleListFragment"
+            app:popUpTo="@id/articleListFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
     </fragment>
 </navigation>

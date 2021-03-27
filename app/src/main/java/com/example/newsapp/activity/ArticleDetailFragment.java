@@ -7,29 +7,46 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
 
 import com.example.newsapp.R;
+import com.example.newsapp.databinding.ArticleFragmentBinding;
 import com.example.newsapp.model.Article;
 
 public class ArticleDetailFragment extends Fragment {
 
     private Article mArticle;
+    private ImageView mCrossImage;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
-        View rootView = inflater.inflate(R.layout.article_fragment, container, false);
+        ArticleFragmentBinding binding = ArticleFragmentBinding.inflate(inflater, container, false);
+        View rootView = binding.getRoot();
+        mCrossImage = rootView.findViewById(R.id.crossImage1);
         WebView myWebView = rootView.findViewById(R.id.webview);
-        myWebView.clearCache(true);
         WebSettings webSettings = myWebView.getSettings();
-        webSettings.setMixedContentMode(WebSettings.MIXED_CONTENT_COMPATIBILITY_MODE);
         webSettings.setJavaScriptEnabled(true);
 
+        //Use navigation on cross button to go back to ArticleListFragment
+        mCrossImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Navigation.findNavController(view)
+                        .navigate(R.id.action_articleDetailFragment_to_articleListFragment);
+            }
+        });
+
+        //Get argument passed from ArticleListFragment
         mArticle = (Article) getArguments().getSerializable("article");
+        binding.setHeader(mArticle);
+        //Load webview using URL from Article object
         myWebView.loadUrl(mArticle.getUrl());
 
         return rootView;

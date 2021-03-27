@@ -7,14 +7,19 @@ import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
 
+/**
+ * This class works as a -
+ * model for Retrofit,
+ * Implements Serializable because is passed between fragments
+ * works as an entity for room database
+ *
+ */
 @Entity(
     tableName = "articles"
 )
 public class Article implements Serializable {
     @PrimaryKey(autoGenerate = true)
     private int id;
-//    @SerializedName("source")
-//    private Source source;
     @SerializedName("author")
     private String author;
     @SerializedName("title")
@@ -27,12 +32,6 @@ public class Article implements Serializable {
     private String urlToImage;
     @SerializedName("publishedAt")
     private String publishedAt;
-//    public Source getSource() {
-//        return source;
-//    }
-//    public void setSource(Source source) {
-//        this.source = source;
-//    }
     public int getId(){return id;}
     public void setId(int id){this.id = id;}
 

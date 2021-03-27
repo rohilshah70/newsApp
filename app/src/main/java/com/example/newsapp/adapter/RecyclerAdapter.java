@@ -26,6 +26,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.Articl
     @NonNull
     @Override
     public ArticleViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        //Inflate card view
         View view = LayoutInflater.from(parent.getContext()).inflate(
                 R.layout.main_card_view,
                 parent,
@@ -42,6 +43,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.Articl
         holder.title.setText(article.getTitle());
         holder.description.setText(article.getDescription());
         Glide.with(holder.itemView).load(article.getUrlToImage()).into(holder.newsImage);
+        //Use navigation to open full article in new fragment. Pass Article object between fragments
         holder.detailButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -61,7 +63,6 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.Articl
     public void setArticleFromActivity(List<Article> list){
         this.mArticleList = list;
         //tell adapter to redraw layout
-        //replace with notfy item changed
         notifyDataSetChanged();
     }
 

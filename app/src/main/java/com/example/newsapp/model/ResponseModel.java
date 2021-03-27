@@ -4,6 +4,9 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
+/**
+ * Model for retrofit response
+ */
 public class ResponseModel {
 
     @SerializedName("status")

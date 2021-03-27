@@ -1,4 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
+<layout>
+    <data>
+        <variable
+            name="header"
+            type="com.example.newsapp.model.Article" />
+    </data>
 <androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
@@ -20,6 +26,7 @@
     <TextView
         android:id="@+id/headerText1"
         android:textSize="20sp"
+        android:text="@{header.title}"
         android:background="#302FB4"
         android:textColor="#FFFFFF"
         android:layout_width="0dp"
@@ -41,3 +48,4 @@
         />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

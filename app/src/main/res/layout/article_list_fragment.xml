@@ -21,7 +21,7 @@
 
     <TextView
         android:id="@+id/headerText"
-        android:textSize="30dp"
+        android:textSize="30sp"
         android:text="@string/header"
         android:background="#302FB4"
         android:textColor="#FFFFFF"

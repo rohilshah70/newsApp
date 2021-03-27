@@ -27,7 +27,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@{recyclerCard.author}"
-            android:textSize="20dp"
+            android:textSize="15dp"
             card_view:layout_constraintStart_toStartOf="parent"
             card_view:layout_constraintTop_toTopOf="parent"
             tools:ignore="MissingConstraints" />
@@ -37,7 +37,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@{recyclerCard.title}"
-            android:textSize="30dp"
+            android:textSize="20dp"
             card_view:layout_constraintStart_toStartOf="parent"
             card_view:layout_constraintTop_toBottomOf="@+id/author_text"
             tools:ignore="MissingConstraints" />
@@ -56,7 +56,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@{recyclerCard.description}"
-            android:textSize="20dp"
+            android:textSize="15dp"
             card_view:layout_constraintStart_toStartOf="parent"
             card_view:layout_constraintTop_toBottomOf="@+id/imageViewPhoto"
             tools:ignore="MissingConstraints" />
@@ -65,7 +65,7 @@
             android:id="@+id/detail_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="20dp"
+            android:textSize="15dp"
             android:text="@string/full_news_button"
             card_view:layout_constraintBottom_toBottomOf="parent"
             card_view:layout_constraintEnd_toEndOf="parent"

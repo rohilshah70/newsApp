@@ -56,7 +56,7 @@ public class ArticleListFragment extends Fragment {
                 else {
                     //the list is empty if newtork connection is not there the first time app is launched
                     //In that case, since no data is fetched, no data is cached
-                    makeToast("No internet connection or no cached data");
+                    makeToast("No cached data yet");
                     Log.d("ArticleListFragment", "in onChanged with empty");
 
                 }

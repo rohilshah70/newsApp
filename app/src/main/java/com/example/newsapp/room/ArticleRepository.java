@@ -8,19 +8,17 @@ import androidx.lifecycle.MutableLiveData;
 import com.example.newsapp.model.Article;
 import com.example.newsapp.model.ResponseModel;
 import com.example.newsapp.retrofit.APIList;
+import com.example.newsapp.retrofit.RetrofitClient;
 
 import java.util.List;
 import java.util.function.Consumer;
 
-import okhttp3.OkHttpClient;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 import static com.example.newsapp.Constants.API_KEY;
-import static com.example.newsapp.Constants.NEWS_BASE_URL;
 
 public class ArticleRepository {
 
@@ -28,38 +26,34 @@ public class ArticleRepository {
     private MutableLiveData<List<Article>> mResponseModelLiveData;
     private Boolean mHasInternet;
     private ArticleDAO mArticleDAO;
+    private static Retrofit mRetrofit = null;
 
     public ArticleRepository(Application application, Boolean hasInternet){
+        //Get instance of room database
         ArticleDatabase db = ArticleDatabase.getDatabase(application);
         mArticleDAO = db.articleDAO();
-//        mAllArticles = mArticleDAO.getAllArticles();
         mHasInternet = hasInternet;
         mResponseModelLiveData = new MutableLiveData<>();
 
-        OkHttpClient client = new OkHttpClient.Builder().build();
+        mRetrofit = RetrofitClient.getClient();
+        mAPIList = mRetrofit.create(APIList.class);
 
-        mAPIList = new Retrofit.Builder()
-                .baseUrl(NEWS_BASE_URL)
-                .client(client)
-                .addConverterFactory(GsonConverterFactory.create())
-                .build()
-                .create(APIList.class);
-
-        //Fetch list as soon as repo is
+        //Fetch list
         getArticleList();
     }
 
     public void getArticleList(){
         if(mHasInternet) {
+            //make request to fetch news list and handle response
             mAPIList.getTrendingNews("in", API_KEY)
                     .enqueue(new Callback<ResponseModel>() {
                         @Override
                         public void onResponse(Call<ResponseModel> call, Response<ResponseModel> response) {
                             if (response.body() != null) {
+                                //Delete existing entries from the table first
                                 delete();
+                                //insert the new fetched list in the database
                                 insert(response.body().getArticles());
-//                            mResponseModelLiveData.postValue(response.body().getArticles());
-                                //delete existing database and add new values
                             }
                         }
 
@@ -69,17 +63,19 @@ public class ArticleRepository {
                         }
                     });
         } else {
+            //If no internet, then call getAllArticle() which returns list from db
             getAllArticles();
         }
 
     }
 
-    //Live data will notify all observers on main thread
+    //Live data will notify all observers
     public LiveData<List<Article>> getAllArticles() {
         return mArticleDAO.getAllArticles();
     }
 
     //Make sure insertion in on non UI thread
+    //NewsViewModel get notified since we have LiveData object in database
     public void insert(final List<Article> article) {
         ArticleDatabase.databaseWriteExecutor.execute(new Runnable() {
             @Override
@@ -94,6 +90,7 @@ public class ArticleRepository {
         });
     }
 
+    //Perform table entries deletion on separate thread
     public void delete(){
         ArticleDatabase.databaseWriteExecutor.execute(new Runnable() {
             @Override

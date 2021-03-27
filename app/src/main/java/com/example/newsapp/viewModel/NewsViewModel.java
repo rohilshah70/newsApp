@@ -10,7 +10,6 @@ import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 
 import com.example.newsapp.model.Article;
-import com.example.newsapp.model.ResponseModel;
 import com.example.newsapp.room.ArticleRepository;
 
 import java.util.List;
@@ -28,8 +27,11 @@ public class NewsViewModel extends AndroidViewModel {
         mAllArticles = mArticleRepo.getAllArticles();
     }
 
+    //Returns LiveData object of type List<Article> from database. As soon as the list gets
+    //updated, all observers observing this method get notified with new list
     public LiveData<List<Article>> getAllArticles() { return mAllArticles; }
 
+    //Check to see if there is internet connection and passes the value to ArticleRepository
     private boolean hasInternetConnection(){
         ConnectivityManager connectivityManager = (ConnectivityManager) mApplication.getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();

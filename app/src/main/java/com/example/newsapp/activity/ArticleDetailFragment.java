@@ -31,11 +31,10 @@ public class ArticleDetailFragment extends Fragment {
         mHeaderText = rootView.findViewById(R.id.headerText1);
         mCrossImage = rootView.findViewById(R.id.crossImage1);
         WebView myWebView = rootView.findViewById(R.id.webview);
-        myWebView.clearCache(true);
         WebSettings webSettings = myWebView.getSettings();
-        webSettings.setMixedContentMode(WebSettings.MIXED_CONTENT_COMPATIBILITY_MODE);
         webSettings.setJavaScriptEnabled(true);
 
+        //Use navigation on cross button to go back to ArticleListFragment
         mCrossImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -44,8 +43,11 @@ public class ArticleDetailFragment extends Fragment {
             }
         });
 
+        //Get argument passed from ArticleListFragment
         mArticle = (Article) getArguments().getSerializable("article");
+        //Get article title to set header in fragment
         mHeaderText.setText(mArticle.getTitle());
+        //Load webview using URL from Article object
         myWebView.loadUrl(mArticle.getUrl());
 
         return rootView;

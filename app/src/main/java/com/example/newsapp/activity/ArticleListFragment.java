@@ -40,7 +40,9 @@ public class ArticleListFragment extends Fragment {
         final RecyclerAdapter recyclerAdapter = new RecyclerAdapter();
         recyclerView.setAdapter(recyclerAdapter);
 
+        //Get view model instance
         mNewsViewModel = new ViewModelProvider(this).get(NewsViewModel.class);
+        //Observe getAllArticles() in view model. As soon as articleList gets updated, onChanged() method gets called
         mNewsViewModel.getAllArticles().observe(getViewLifecycleOwner(), new Observer<List<Article>>() {
             @Override
             public void onChanged(List<Article> articleList) {
@@ -48,11 +50,14 @@ public class ArticleListFragment extends Fragment {
                     //update recycler view
                     recyclerAdapter.setArticleFromActivity(articleList);
                 else {
+                    //the list is empty if newtork connection is not there the first time app is launched
+                    //In that case, since no data is fetched, no data is cached
                     makeToast("No internet connection or no cached data");
                 }
             }
         });
 
+        //Use navigation on cross button to go back to MotionFragment
         mCrossImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

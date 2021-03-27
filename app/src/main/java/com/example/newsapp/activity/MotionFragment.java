@@ -1,8 +1,6 @@
 package com.example.newsapp.activity;
 
-import android.animation.LayoutTransition;
 import android.os.Bundle;
-import android.transition.Scene;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -28,6 +26,7 @@ public class MotionFragment extends Fragment {
         mRootView = inflater.inflate(R.layout.motion_layout, container, false);
         mTextView = mRootView.findViewById(R.id.open_news_list);
 
+        //Use navigation on text view to go to ArticleListFragment
         mTextView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -36,7 +35,6 @@ public class MotionFragment extends Fragment {
 
             }
         });
-        Log.d( TAG, "In onCreateView");
 
         return mRootView;
     }

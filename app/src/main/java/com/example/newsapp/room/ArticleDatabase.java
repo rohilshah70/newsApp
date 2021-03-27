@@ -20,7 +20,10 @@ public abstract class ArticleDatabase extends RoomDatabase {
 
     public abstract ArticleDAO articleDAO();
 
+    //
     private static volatile ArticleDatabase INSTANCE;
+
+    //To execute database operations on seperate thread
     private static final int NUMBER_OF_THREADS = 4;
     static final ExecutorService databaseWriteExecutor =
             Executors.newFixedThreadPool(NUMBER_OF_THREADS);
